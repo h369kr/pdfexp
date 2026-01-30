@@ -1,1 +1,5 @@
 "@if(equals(pipeline().parameters.CustomDLName,'True'),\nitem().DLTableName,\nreplace(replace(replace(replace(\ntoLower(if(\nor(equals(replace(replace(replace(replace(item().fileName, '.xlsx',''),'.xls',''),'.csv',''),'.pdf',''), item().sheetName), equals(item().sheetName,'DataToBeIngested'))\n, replace(replace(replace(replace(item().fileName, '.xlsx',''),'.xls',''),'.csv',''),'.pdf','')\n,concat(replace(replace(replace(replace(item().fileName, '.xlsx',''),'.xls',''),'.csv',''),'.pdf',''), '_', item().sheetName)\n)),'_sheet1','')\n,'-','_'),' ',''),'.',''))"
+
+
+
+"@if(contains(item().fileName, '.pdf'),\nconcat(replace(item().fileName,'.pdf',''), '_', formatDateTime(utcnow(), 'yyyyMMdd'), '.pdf'),\nif(contains(item().fileName, '.xlsx'), \nconcat(replace(item().fileName,'.xlsx',''), '_', item().sheetName, '_', formatDateTime(utcnow(), 'yyyyMMdd'), '.xlsx'),\nconcat(replace(item().fileName,'.csv',''), '_', item().sheetName, '_', formatDateTime(utcnow(), 'yyyyMMdd'), '.csv')))"
